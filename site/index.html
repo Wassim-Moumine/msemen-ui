@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MSEMEN — La crêpe feuilletée du Maroc</title>
+  <meta name="description" content="Tout sur le msemen marocain : histoire, recette, et toutes ses déclinaisons — meloui, rghaif, farci, rziza, rfissa…" />
+  <meta name="theme-color" content="#1c120d" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='14' y='14' width='72' height='72' rx='8' fill='%23e0a64b' transform='rotate(-8 50 50)'/></svg>" />
+
+  <!-- Polices : Bricolage Grotesque (titres), Instrument Serif (italiques), Amiri (arabe) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============ SVG réutilisables (illustrations dessinées en code) ============ -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="g-dough" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#f3c977" />
+        <stop offset=".55" stop-color="#e0a64b" />
+        <stop offset="1" stop-color="#b9772a" />
+      </linearGradient>
+      <radialGradient id="g-spot">
+        <stop offset="0" stop-color="#7a4515" stop-opacity=".75" />
+        <stop offset="1" stop-color="#7a4515" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+
+    <!-- Msemen carré -->
+    <symbol id="i-square" viewBox="0 0 200 200">
+      <rect x="28" y="28" width="144" height="144" rx="14" fill="url(#g-dough)" />
+      <path d="M76 30v140M124 30v140M30 76h140M30 124h140" stroke="#a8651f" stroke-opacity=".35" stroke-width="2" />
+      <circle cx="62" cy="58" r="14" fill="url(#g-spot)" />
+      <circle cx="140" cy="96" r="18" fill="url(#g-spot)" />
+      <circle cx="94" cy="146" r="12" fill="url(#g-spot)" />
+      <circle cx="150" cy="150" r="9" fill="url(#g-spot)" />
+      <circle cx="104" cy="88" r="7" fill="url(#g-spot)" />
+      <rect x="28" y="28" width="144" height="144" rx="14" fill="none" stroke="#fff3d6" stroke-opacity=".35" stroke-width="2" />
+    </symbol>
+
+    <!-- Meloui (spirale) -->
+    <symbol id="i-spiral" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="74" fill="url(#g-dough)" />
+      <path d="M100 100m0-6a6 6 0 1 1-6 6a14 14 0 1 1 14 14a24 24 0 1 1-24-24a34 34 0 1 1 34 34a46 46 0 1 1-46-46a58 58 0 1 1 58 58"
+            fill="none" stroke="#a8651f" stroke-opacity=".5" stroke-width="3" stroke-linecap="round" />
+      <circle cx="70" cy="70" r="14" fill="url(#g-spot)" />
+      <circle cx="134" cy="126" r="16" fill="url(#g-spot)" />
+    </symbol>
+
+    <!-- Msemen farci -->
+    <symbol id="i-stuffed" viewBox="0 0 200 200">
+      <rect x="34" y="40" width="132" height="126" rx="16" fill="#b9772a" />
+      <rect x="28" y="28" width="144" height="128" rx="14" fill="url(#g-dough)" />
+      <g fill="var(--fill, #8e2a1b)"><circle cx="64" cy="158" r="6"/><circle cx="92" cy="162" r="5"/><circle cx="124" cy="160" r="6"/><circle cx="150" cy="156" r="4"/></g>
+      <g fill="var(--herb, #2f6b2a)"><circle cx="78" cy="160" r="3"/><circle cx="110" cy="163" r="3"/><circle cx="138" cy="161" r="3"/></g>
+      <path d="M76 30v124M124 30v124M30 92h140" stroke="#a8651f" stroke-opacity=".35" stroke-width="2" />
+      <circle cx="140" cy="62" r="16" fill="url(#g-spot)" />
+      <circle cx="66" cy="120" r="13" fill="url(#g-spot)" />
+    </symbol>
+
+    <!-- Rziza (turban de fils) -->
+    <symbol id="i-threads" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="74" fill="url(#g-dough)" />
+      <g fill="none" stroke="#a8651f" stroke-opacity=".45" stroke-width="2">
+        <circle cx="100" cy="100" r="66"/><circle cx="100" cy="100" r="58"/><circle cx="100" cy="100" r="50"/>
+        <circle cx="100" cy="100" r="42"/><circle cx="100" cy="100" r="34"/><circle cx="100" cy="100" r="26"/><circle cx="100" cy="100" r="18"/>
+      </g>
+      <path d="M100 60c14 6 14 22 0 30s-14 26 4 34" stroke="#f7d27b" stroke-width="5" fill="none" stroke-linecap="round" opacity=".9"/>
+    </symbol>
+
+    <!-- Rfissa (assiette) -->
+    <symbol id="i-bowl" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="118" rx="82" ry="52" fill="#1c120d" opacity=".15" />
+      <ellipse cx="100" cy="108" rx="80" ry="50" fill="#f3ebdc" stroke="#c9a46a" stroke-width="3" />
+      <g stroke="url(#g-dough)" stroke-width="9" stroke-linecap="round" fill="none">
+        <path d="M52 104q20-16 40 0"/><path d="M98 92q22-12 46 2"/><path d="M64 122q24 10 48-2"/><path d="M116 120q16 8 30-4"/>
+      </g>
+      <ellipse cx="102" cy="104" rx="22" ry="14" fill="#c98a2e" />
+      <ellipse cx="96" cy="100" rx="9" ry="5" fill="#f1c370" opacity=".8" />
+      <g fill="#6b4a2a"><circle cx="70" cy="96" r="3"/><circle cx="130" cy="110" r="3"/><circle cx="86" cy="124" r="3"/></g>
+    </symbol>
+
+    <!-- Msemen au miel -->
+    <symbol id="i-honey" viewBox="0 0 200 200">
+      <rect x="28" y="28" width="144" height="144" rx="14" fill="url(#g-dough)" />
+      <path d="M40 70c30-14 50 20 80 4s40 10 44 20c-8 18-30 2-50 16s-40 30-70 10c-14-10-14-40-4-50z" fill="#f6b72b" opacity=".75" />
+      <path d="M60 90c20-6 40 10 60 2" stroke="#fff4c7" stroke-width="4" fill="none" stroke-linecap="round" opacity=".8"/>
+      <rect x="92" y="96" width="22" height="16" rx="3" fill="#fff1c9" />
+    </symbol>
+
+    <!-- Msemen roulé street -->
+    <symbol id="i-roll" viewBox="0 0 200 200">
+      <rect x="26" y="70" width="148" height="64" rx="32" fill="url(#g-dough)" />
+      <ellipse cx="160" cy="102" rx="16" ry="32" fill="#c98a2e" />
+      <ellipse cx="160" cy="102" rx="9" ry="20" fill="#fff1c9" />
+      <path d="M60 72v60M96 72v60M128 72v60" stroke="#a8651f" stroke-opacity=".35" stroke-width="2" />
+      <circle cx="80" cy="96" r="12" fill="url(#g-spot)" />
+    </symbol>
+
+    <!-- Trid (feuille fine) -->
+    <symbol id="i-sheet" viewBox="0 0 200 200">
+      <path d="M30 60c40-30 100-40 140-10 10 40 4 90-20 110-50 14-90 10-116-14-10-30-14-60-4-86z" fill="url(#g-dough)" opacity=".7" />
+      <path d="M44 72c36-22 88-28 116-6 6 32 2 70-16 86-40 10-74 8-96-10-8-24-10-48-4-70z" fill="#f6d79a" opacity=".55" />
+      <circle cx="80" cy="90" r="12" fill="url(#g-spot)" />
+      <circle cx="130" cy="130" r="14" fill="url(#g-spot)" />
+    </symbol>
+  </svg>
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" aria-hidden="true">
+    <div class="preloader__inner">
+      <span class="preloader__ar">مسمن</span>
+      <span class="preloader__count"><span class="js-count">0</span>%</span>
+    </div>
+    <div class="preloader__bar"><span></span></div>
+  </div>
+
+  <!-- Curseur personnalisé (desktop) -->
+  <div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav">
+    <a href="#top" class="nav__logo" data-magnetic>MSEMEN<sup>®</sup></a>
+    <nav class="nav__links" aria-label="Navigation principale">
+      <a href="#histoire">Histoire</a>
+      <a href="#recette">Recette</a>
+      <a href="#declinaisons">Déclinaisons</a>
+      <a href="#n48">N°48</a>
+    </nav>
+    <a href="#recette" class="btn btn--small" data-magnetic>À la poêle →</a>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero__meta">
+        <span class="hero__tag">Street food · Maroc</span>
+        <span class="hero__tag">Depuis toujours</span>
+      </div>
+
+      <h1 class="hero__title" aria-label="Msemen">
+        <span class="line"><span class="char">M</span><span class="char">S</span><span class="char">E</span><span class="char">M</span><span class="char">E</span><span class="char">N</span></span>
+      </h1>
+
+      <div class="hero__visual" aria-hidden="true">
+        <svg class="hero__msemen"><use href="#i-square" /></svg>
+      </div>
+
+      <div class="hero__bottom">
+        <p class="hero__lead reveal-up">
+          La crêpe <em>feuilletée</em> qui se plie, se beurre, se farcit
+          et se partage avec un verre de thé à la menthe.
+        </p>
+        <a href="#declinaisons" class="btn" data-magnetic data-cursor="Goûter">Voir les déclinaisons</a>
+      </div>
+
+      <div class="hero__scroll" aria-hidden="true"><span></span>Scroll</div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Msemen</span><i>✦</i><span>Meloui</span><i>✦</i><span>Rghaif</span><i>✦</i><span>Rziza</span><i>✦</i><span>Rfissa</span><i>✦</i><span>Trid</span><i>✦</i>
+        <span>Msemen</span><i>✦</i><span>Meloui</span><i>✦</i><span>Rghaif</span><i>✦</i><span>Rziza</span><i>✦</i><span>Rfissa</span><i>✦</i><span>Trid</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- ============ MANIFESTE / HISTOIRE ============ -->
+    <section class="manifesto" id="histoire">
+      <span class="eyebrow">(01) — L'histoire</span>
+      <p class="manifesto__text js-words">
+        Au Maroc, le msemen se prépare à l'aube et se mange au goûter. Une pâte simple, farine, semoule, sel et eau, étirée jusqu'à devenir transparente, beurrée, puis pliée encore et encore. Le résultat : des dizaines de couches croustillantes dehors, fondantes dedans. On l'appelle aussi rghaif. Chaque famille a sa main, chaque ville a sa version.
+      </p>
+
+      <div class="stats">
+        <div class="stat"><span class="stat__num" data-count="9">0</span><span class="stat__label">couches à chaque pliage en trois</span></div>
+        <div class="stat"><span class="stat__num" data-count="3">0</span><span class="stat__label">minutes de cuisson par face</span></div>
+        <div class="stat"><span class="stat__num" data-count="5">0</span><span class="stat__label">ingrédients, pas un de plus</span></div>
+        <div class="stat"><span class="stat__num">∞</span><span class="stat__label">verres de thé à la menthe</span></div>
+      </div>
+    </section>
+
+    <!-- ============ RECETTE (scroll horizontal) ============ -->
+    <section class="recipe" id="recette">
+      <div class="recipe__pin">
+        <div class="recipe__head">
+          <span class="eyebrow">(02) — La recette</span>
+          <h2 class="h2">Six gestes,<br /><em>une infinité</em> de couches.</h2>
+        </div>
+
+        <div class="recipe__track">
+          <article class="step step--ingredients">
+            <span class="step__num">00</span>
+            <h3>Les ingrédients</h3>
+            <ul>
+              <li><b>500 g</b> farine</li>
+              <li><b>200 g</b> semoule fine</li>
+              <li><b>1 c.à.c</b> sel</li>
+              <li><b>1 c.à.c</b> sucre</li>
+              <li><b>~350 ml</b> eau tiède</li>
+              <li class="sep">Pour le pliage : huile, beurre fondu, semoule fine.</li>
+            </ul>
+          </article>
+          <article class="step"><span class="step__num">01</span><h3>Pétrir</h3><p>Mélange farine, semoule, sel et sucre. Ajoute l'eau petit à petit et pétris 10 à 15 min, jusqu'à obtenir une pâte lisse, souple et élastique.</p></article>
+          <article class="step"><span class="step__num">02</span><h3>Diviser</h3><p>Forme des boules de la taille d'une mandarine. Badigeonne-les d'huile et laisse reposer 15 min sous un torchon : le gluten se détend.</p></article>
+          <article class="step step--photo" style="background-image:url(assets/photos/etaler.jpg)"><span class="step__num">03</span><h3>Étaler</h3><p>Sur un plan de travail huilé, étire chaque boule du bout des doigts jusqu'à ce qu'elle soit presque transparente. C'est là que tout se joue.</p></article>
+          <article class="step"><span class="step__num">04</span><h3>Plier</h3><p>Beurre fondu, pluie de semoule. Plie en trois dans un sens, puis en trois dans l'autre : un carré parfait. Repos 10 min, puis aplatis-le doucement.</p></article>
+          <article class="step step--photo" style="background-image:url(assets/photos/cuire.jpg)"><span class="step__num">05</span><h3>Cuire</h3><p>Poêle bien chaude, à sec ou à peine huilée. 2 à 3 min par face, jusqu'à ces taches dorées qui font tout le charme.</p></article>
+          <article class="step step--last step--photo" style="background-image:url(assets/photos/servir.jpg)"><span class="step__num">06</span><h3>Servir</h3><p>Chaud. Avec du miel et du beurre fondu, ou de l'amlou, ou du jben. Et un thé à la menthe versé de haut. <em>Bessaha.</em></p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DECLINAISONS ============ -->
+    <section class="variants" id="declinaisons">
+      <div class="variants__head">
+        <span class="eyebrow">(03) — Les déclinaisons</span>
+        <h2 class="h2">Une pâte, <em>mille</em> visages.</h2>
+        <div class="filters" role="tablist" aria-label="Filtrer les déclinaisons">
+          <button class="filter is-active" data-filter="all">Tous</button>
+          <button class="filter" data-filter="nature">Nature</button>
+          <button class="filter" data-filter="farci">Farci</button>
+          <button class="filter" data-filter="sucre">Sucré</button>
+          <button class="filter" data-filter="plat">Plat</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <article class="card" data-cat="nature" data-cursor="Miam">
+          <div class="card__visual card__visual--photo"><img src="assets/photos/classique.jpg" alt="Pile de msemen carrés dorés" loading="lazy" /></div>
+          <div class="card__body">
+            <span class="card__ar">مسمن</span>
+            <h3>Msemen classique</h3>
+            <p>Le carré feuilleté de référence. Croustillant, beurré, doré par plaques.</p>
+            <span class="card__tag">Nature</span>
+          </div>
+        </article>
+
+        <article class="card" data-cat="nature" data-cursor="Miam">
+          <div class="card__visual card__visual--photo"><img src="assets/photos/meloui.jpg" alt="Meloui enroulé en spirale" loading="lazy" /></div>
+          <div class="card__body">
+            <span class="card__ar">ملوي</span>
+            <h3>Meloui</h3>
+            <p>La même pâte, mais roulée en boudin puis enroulée en spirale. Plus épais, plus moelleux, il s'effeuille quand on le froisse.</p>
+            <span class="card__tag">Nature</span>
+          </div>
+        </article>
+
+        <article class="card" data-cat="farci" data-cursor="Miam">
+          <div class="card__visual card__visual--photo"><img src="assets/photos/mammer.jpg" alt="Msemen farci aux oignons et épices" loading="lazy" /></div>
+          <div class="card__body">
+            <span class="card__ar">مسمن معمر</span>
+            <h3>Msemen m'âmmer</h3>
+            <p>Farci d'oignons fondants, persil, coriandre, paprika, cumin et une pointe de piment. Le goûter salé par excellence.</p>
+            <span class="card__tag">Farci</span>
+          </div>
+        </article>
+
+        <article class="card" data-cat="farci" data-cursor="Miam">
+          <div class="card__visual" style="--fill:#5a2e17;--herb:#8e5a2a"><svg><use href="#i-stuffed" /></svg></div>
+          <div class="card__body">
+            <span class="card__ar">مسمن بالخليع</span>
+            <h3>Msemen au khlii</h3>
+            <p>Garni de khlii, la viande séchée et confite dans sa graisse. Intense, fumé, généreux. Une version de fête.</p>
+            <span class="card__tag">Farci</span>
+          </div>
+        </article>
+
+        <article class="card" data-cat="farci" data-cursor="Miam">
+          <div class="card__visual" style="--fill:#a3261b;--herb:#3d7a33"><svg><use href="#i-stuffed" /></svg></div>
+          <div class="card__body">
+            <span class="card__ar">مسمن بالكفتة</span>
+            <h3>Msemen kefta</h3>
+            <p>Viande hachée épicée, oignon et herbes, enfermée entre les couches. Un repas complet dans un carré.</p>
+            <span class="card__tag">Farci</span>
+          </div>
+        </article>
+
+        <article class="card" data-cat="sucre" data-cursor="Miam">
+          <div class="card__visual card__visual--photo"><img src="assets/photos/miel-beurre.jpg" alt="Msemen servi avec du beurre" loading="lazy" /></div>
+          <div class="card__body">
+            <span class="card__ar">مسمن بالعسل</span>
+            <h3>Msemen miel &amp; beurre</h3>
+            <p>Trempé dans un mélange chaud de miel et de beurre fondu. Le classique des après-midis de Ramadan.</p>
+            <span class="card__tag">Sucré</span>
+          </div>
+        </article>
+
+        <article class="card" data-cat="sucre" data-cursor="Miam">
+          <div class="card__visual card__visual--photo"><img src="assets/photos/rziza.jpg" alt="Rziza, fils de pâte enroulés" loading="lazy" /></div>
+          <div class="card__body">
+            <span class="card__ar">رزيزة</span>
+            <h3>Rziza</h3>
+            <p>La pâte est étirée en fils très fins, enroulés en turban. Servie arrosée de miel et de beurre. Un travail d'orfèvre.</p>
+            <span class="card__tag">Sucré</span>
+          </div>
+        </article>
+
+        <article class="card" data-cat="plat" data-cursor="Miam">
+          <div class="card__visual card__visual--photo"><img src="assets/photos/rfissa.jpg" alt="Rfissa au poulet, lentilles et œufs" loading="lazy" /></div>
+          <div class="card__body">
+            <span class="card__ar">رفيسة</span>
+            <h3>Rfissa</h3>
+            <p>Msemen ou trid effilochés, nappés d'un bouillon de poulet aux lentilles, fenugrec et ras el hanout. Le plat des grandes occasions.</p>
+            <span class="card__tag">Plat</span>
+          </div>
+        </article>
+
+        <article class="card" data-cat="plat" data-cursor="Miam">
+          <div class="card__visual card__visual--photo"><img src="assets/photos/trid.jpg" alt="Feuilles de trid effilochées pour la rfissa" loading="lazy" /></div>
+          <div class="card__body">
+            <span class="card__ar">تريد</span>
+            <h3>Trid</h3>
+            <p>Le cousin ultra-fin : des feuilles quasi transparentes, cuites sur une marmite retournée, servies sous un tajine de poulet.</p>
+            <span class="card__tag">Plat</span>
+          </div>
+        </article>
+
+        <article class="card" data-cat="farci" data-cursor="Miam">
+          <div class="card__visual"><svg><use href="#i-roll" /></svg></div>
+          <div class="card__body">
+            <span class="card__ar">مسمن بالفرماج</span>
+            <h3>Msemen street</h3>
+            <p>Roulé avec du fromage fondu, de l'omelette ou du thon : la version sandwich des charrettes de rue. Ça se mange en marchant.</p>
+            <span class="card__tag">Farci</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ N°48 (photo fournie) ============ -->
+    <section class="n48" id="n48">
+      <div class="n48__text">
+        <span class="eyebrow eyebrow--light">(04) — Le N°48</span>
+        <h2 class="h2">Du goûter<br />au <em>MetLife Stadium.</em></h2>
+        <p>
+          Le msemen ne reste pas à la maison. Floqué en lettres d'or sur le maillot
+          des Lions de l'Atlas, il a fait le voyage jusqu'à New York / New Jersey pour la
+          Coupe du Monde 2026. Écharpe au cou, drapeau à l'étoile verte :
+          <em>Dima Maghrib.</em>
+        </p>
+      </div>
+
+      <figure class="n48__figure" data-cursor="N°48">
+        <div class="n48__img-wrap">
+          <img src="assets/msemen-48.webp" alt="Supporter de dos portant un maillot rouge du Maroc floqué MSEMEN 48, dans les tribunes d'un stade de la Coupe du Monde 2026 à New York New Jersey" loading="lazy" width="1500" height="2000" />
+        </div>
+        <figcaption><span>MSEMEN — 48</span><span>FIFA World Cup 2026 · NY/NJ</span></figcaption>
+      </figure>
+
+      <div class="n48__big" aria-hidden="true">48</div>
+    </section>
+
+    <!-- ============ ACCOMPAGNEMENTS ============ -->
+    <section class="pairings">
+      <span class="eyebrow">(05) — Avec quoi ?</span>
+      <ul class="pairings__list">
+        <li data-cursor="Oui"><span>Miel &amp; beurre</span><small>le duo sacré</small></li>
+        <li data-cursor="Oui"><span>Amlou</span><small>amandes, argan, miel</small></li>
+        <li data-cursor="Oui"><span>Thé à la menthe</span><small>versé de haut, obligatoire</small></li>
+        <li data-cursor="Oui"><span>Jben</span><small>fromage frais du nord</small></li>
+        <li data-cursor="Oui"><span>Vache qui rit</span><small>le choix des enfants (et des grands)</small></li>
+        <li data-cursor="Oui"><span>Huile d'olive</span><small>et une pincée de sel</small></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer__cta">
+      <p class="footer__ar">بالصحة</p>
+      <p class="footer__sub">Bessaha — à ta santé.</p>
+      <a href="#top" class="btn btn--light" data-magnetic>Remonter ↑</a>
+    </div>
+    <div class="footer__giant" aria-hidden="true">MSEMEN</div>
+    <div class="footer__meta">
+      <span>Projet YNOV · Conteneurisation &amp; Orchestration</span>
+      <span>Servi par Nginx dans un conteneur Docker 🐳</span>
+    </div>
+    <details class="footer__credits">
+      <summary>Crédits photos — Wikimedia Commons</summary>
+      <ul>
+        <li>Msemen classique : <a href="https://commons.wikimedia.org/wiki/File:Msemmen_(_r%C3%A9alis%C3%A9es_par_Hadni_S_).jpg" target="_blank" rel="noopener">Tililen84</a>, CC BY-SA 4.0</li>
+        <li>Meloui : <a href="https://commons.wikimedia.org/wiki/File:M%C3%A9loui.JPG" target="_blank" rel="noopener">Maliblue</a>, CC BY-SA 3.0</li>
+        <li>Msemen m'âmmer : <a href="https://commons.wikimedia.org/wiki/File:Msammen.jpg" target="_blank" rel="noopener">50musta</a>, CC BY-SA 3.0</li>
+        <li>Miel &amp; beurre : <a href="https://commons.wikimedia.org/wiki/File:Smen_msemmen.jpg" target="_blank" rel="noopener">Lucyin</a>, CC BY-SA 3.0</li>
+        <li>Rziza : <a href="https://commons.wikimedia.org/wiki/File:Rzaiza.jpg" target="_blank" rel="noopener">Lucyin</a>, CC BY-SA 3.0</li>
+        <li>Rfissa : <a href="https://commons.wikimedia.org/wiki/File:Rfissa_de_poulet_marocaine.jpg" target="_blank" rel="noopener">Solima arizo</a>, CC BY-SA 4.0</li>
+        <li>Trid : <a href="https://commons.wikimedia.org/wiki/File:Ary-trid_p%C3%A5sse_arfisa.jpeg" target="_blank" rel="noopener">Lucyin</a>, CC BY-SA 4.0</li>
+        <li>Étaler : <a href="https://commons.wikimedia.org/wiki/File:A_woman_from_Morocco_prepares_Msemen.jpg" target="_blank" rel="noopener">Mounir Neddi</a>, CC BY-SA 4.0</li>
+        <li>Cuire : <a href="https://commons.wikimedia.org/wiki/File:Msemmem.jpg" target="_blank" rel="noopener">Popo le Chien</a>, CC0</li>
+        <li>Servir : <a href="https://commons.wikimedia.org/wiki/File:Cuisson_du_m%C3%A9loui_-_Maroc.jpeg" target="_blank" rel="noopener">Freepius44</a>, CC BY-SA 4.0</li>
+        <li>Photos redimensionnées. Licences : <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" target="_blank" rel="noopener">CC BY-SA</a>.</li>
+      </ul>
+    </details>
+  </footer>
+
+  <!-- ============ SCRIPTS : GSAP (animations) + Lenis (scroll fluide) ============ -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Flip.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

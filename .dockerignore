@@ -1,0 +1,9 @@
+# Fichiers inutiles dans le contexte de build => build plus rapide, image plus propre
+.git
+.gitignore
+README.md
+docker-compose.yml
+Dockerfile
+.dockerignore
+**/.DS_Store
+**/Thumbs.db

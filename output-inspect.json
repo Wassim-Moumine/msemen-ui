@@ -1,0 +1,302 @@
+[
+    {
+        "Id": "0f9ccd7e1ab94e6653d32ac7ee9a5c90d29e4243e5514924294142af097cccce",
+        "Created": "2026-10-06T12:31:03.384894395Z",
+        "Path": "/docker-entrypoint.sh",
+        "Args": [
+            "nginx",
+            "-g",
+            "daemon off;"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 5938,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-10-06T12:31:03.42398054Z",
+            "FinishedAt": "0001-01-01T00:00:00Z",
+            "Health": {
+                "Status": "healthy",
+                "FailingStreak": 0,
+                "Log": [
+                    {
+                        "Start": "2026-10-06T15:11:34.309384183+02:00",
+                        "End": "2026-10-06T15:11:34.45758988+02:00",
+                        "ExitCode": 0,
+                        "Output": "ok\n"
+                    },
+                    {
+                        "Start": "2026-10-06T15:12:04.459672419+02:00",
+                        "End": "2026-10-06T15:12:04.60126371+02:00",
+                        "ExitCode": 0,
+                        "Output": "ok\n"
+                    },
+                    {
+                        "Start": "2026-10-06T15:12:34.603272723+02:00",
+                        "End": "2026-10-06T15:12:34.770010871+02:00",
+                        "ExitCode": 0,
+                        "Output": "ok\n"
+                    },
+                    {
+                        "Start": "2026-10-06T15:13:04.77123667+02:00",
+                        "End": "2026-10-06T15:13:04.850766538+02:00",
+                        "ExitCode": 0,
+                        "Output": "ok\n"
+                    },
+                    {
+                        "Start": "2026-10-06T15:13:34.852260454+02:00",
+                        "End": "2026-10-06T15:13:34.96755901+02:00",
+                        "ExitCode": 0,
+                        "Output": "ok\n"
+                    }
+                ]
+            }
+        },
+        "Image": "sha256:023cda87b01802c09fd248c2916bb977696f71d60160d668a9ce3a5d4a0c16b9",
+        "ResolvConfPath": "/var/lib/docker/containers/0f9ccd7e1ab94e6653d32ac7ee9a5c90d29e4243e5514924294142af097cccce/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/0f9ccd7e1ab94e6653d32ac7ee9a5c90d29e4243e5514924294142af097cccce/hostname",
+        "HostsPath": "/var/lib/docker/containers/0f9ccd7e1ab94e6653d32ac7ee9a5c90d29e4243e5514924294142af097cccce/hosts",
+        "LogPath": "/var/lib/docker/containers/0f9ccd7e1ab94e6653d32ac7ee9a5c90d29e4243e5514924294142af097cccce/0f9ccd7e1ab94e6653d32ac7ee9a5c90d29e4243e5514924294142af097cccce-json.log",
+        "Name": "/msemen-ui",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "msemen-ui_default",
+            "PortBindings": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "8080"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "unless-stopped",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": null,
+            "DnsSearch": null,
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": null,
+            "Tmpfs": {
+                "/tmp": "",
+                "/var/cache/nginx": ""
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "0f9ccd7e1ab9",
+            "Domainname": "",
+            "User": "101",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.27.5",
+                "PKG_RELEASE=1",
+                "DYNPKG_RELEASE=1",
+                "NJS_VERSION=0.8.10",
+                "NJS_RELEASE=1"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "wget -qO- http://127.0.0.1:8080/health || exit 1"
+                ],
+                "Interval": 30000000000,
+                "Timeout": 3000000000,
+                "StartPeriod": 5000000000,
+                "Retries": 3
+            },
+            "Image": "msemen-ui:1.0",
+            "Volumes": null,
+            "WorkingDir": "/",
+            "Entrypoint": [
+                "/docker-entrypoint.sh"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "c53ec6cdc08aaf6a885d041aa13c74a388a1f0b46c61152da0eddd957b647e80",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "",
+                "com.docker.compose.image": "sha256:78d4db7c467088f5f7711525d484c4be4309bd1ffa00b5d14e808c68873c42ad",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "msemen-ui",
+                "com.docker.compose.project.config_files": "/mnt/c/Users/wassi/Documents/YNOV/CONTENEUR-ORCHESTRATION/MSEMEN-UI/docker-compose.yml",
+                "com.docker.compose.project.working_dir": "/mnt/c/Users/wassi/Documents/YNOV/CONTENEUR-ORCHESTRATION/MSEMEN-UI",
+                "com.docker.compose.service": "msemen-ui",
+                "com.docker.compose.version": "5.6.0",
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>",
+                "org.opencontainers.image.authors": "Wassim Moumine",
+                "org.opencontainers.image.created": "2025-06-23T02:05:23.879Z",
+                "org.opencontainers.image.description": "Site vitrine sur le msemen marocain et ses déclinaisons",
+                "org.opencontainers.image.licenses": "Apache-2.0",
+                "org.opencontainers.image.revision": "d5fb0119cf5c6a94cba03474ccc841bbe037fa87",
+                "org.opencontainers.image.source": "https://github.com/nginx/docker-nginx-unprivileged",
+                "org.opencontainers.image.title": "msemen-ui",
+                "org.opencontainers.image.url": "https://github.com/nginx/docker-nginx-unprivileged",
+                "org.opencontainers.image.version": "1.27.5-alpine"
+            },
+            "StopSignal": "SIGQUIT"
+        },
+        "NetworkSettings": {
+            "SandboxID": "f6449cbe57595d17cf9f4698215b755bfd2642b94db86a7c899bbbbdf6655945",
+            "SandboxKey": "/var/run/docker/netns/f6449cbe5759",
+            "Ports": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "8080"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "8080"
+                    }
+                ]
+            },
+            "Networks": {
+                "msemen-ui_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "msemen-ui",
+                        "msemen-ui"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "b7943be523d0535a97417dedb5ae05fb96d1051590d272c62b26a8c4b5f8a30a",
+                    "EndpointID": "242d56207adc38c448b99e22e1b3134be302c6f9ce7dcf215efb2f4f211fe489",
+                    "Gateway": "172.18.0.1",
+                    "IPAddress": "172.18.0.2",
+                    "MacAddress": "ca:f4:a5:81:c6:57",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "msemen-ui",
+                        "0f9ccd7e1ab9"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:78d4db7c467088f5f7711525d484c4be4309bd1ffa00b5d14e808c68873c42ad",
+            "size": 2378,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    }
+]
