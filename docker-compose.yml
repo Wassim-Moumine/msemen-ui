@@ -1,10 +1,32 @@
 services:
+  traefik:
+    image: traefik:v3.6
+    container_name: traefik
+    restart: unless-stopped
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=msemen-front
+      - --entrypoints.web.address=:80
+      - --api.dashboard=true
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.dashboard.rule=Host(`traefik.localhost`)
+      - traefik.http.routers.dashboard.entrypoints=web
+      - traefik.http.routers.dashboard.service=api@internal
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - front
+
   msemen-ui:
     build: .
     image: msemen-ui:1.0
     container_name: msemen-ui
-    ports:
-      - "80:8080"
     restart: unless-stopped
     read_only: true
     tmpfs:
@@ -14,6 +36,11 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.msemen.rule=Host(`msemen.localhost`)
+      - traefik.http.routers.msemen.entrypoints=web
+      - traefik.http.services.msemen.loadbalancer.server.port=8080
     networks:
       - front
 
@@ -49,14 +76,17 @@ services:
       MM_SQLSETTINGS_DRIVERNAME: postgres
       MM_SQLSETTINGS_DATASOURCE: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?sslmode=disable&connect_timeout=10
       MM_SERVICESETTINGS_SITEURL: ${MM_SITEURL}
-    ports:
-      - "8065:8065"
     volumes:
       - mm-config:/mattermost/config
       - mm-data:/mattermost/data
       - mm-logs:/mattermost/logs
       - mm-plugins:/mattermost/plugins
       - mm-client-plugins:/mattermost/client/plugins
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.mattermost.rule=Host(`mattermost.localhost`)
+      - traefik.http.routers.mattermost.entrypoints=web
+      - traefik.http.services.mattermost.loadbalancer.server.port=8065
     security_opt:
       - no-new-privileges:true
     networks:
@@ -87,6 +117,7 @@ services:
 
 networks:
   front:
+    name: msemen-front
   back:
     internal: true
 
