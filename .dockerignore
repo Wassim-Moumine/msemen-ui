@@ -1,9 +1,10 @@
-# Fichiers inutiles dans le contexte de build => build plus rapide, image plus propre
 .git
-.gitignore
-README.md
-docker-compose.yml
+.env
+.env.example
+secrets/
+registry/
+*.md
+output-inspect.json
+docker-compose*.yml
 Dockerfile
-.dockerignore
-**/.DS_Store
-**/Thumbs.db
+publish.sh

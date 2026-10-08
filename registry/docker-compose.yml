@@ -1,0 +1,20 @@
+name: msemen-registry
+
+services:
+  registry:
+    image: registry:2.8.3
+    container_name: msemen-registry
+    ports:
+      - "127.0.0.1:5000:5000"
+    environment:
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: MSEMEN registry
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      REGISTRY_STORAGE_DELETE_ENABLED: "true"
+    volumes:
+      - registry_data:/var/lib/registry
+      - ./auth:/auth:ro
+    restart: unless-stopped
+
+volumes:
+  registry_data:

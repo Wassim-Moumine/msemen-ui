@@ -1,37 +1,32 @@
-/* =========================================================
-   MSEMEN — animations
-   Librairies chargées depuis le CDN : GSAP, ScrollTrigger, Flip, Lenis
-   ========================================================= */
-
 const $ = (s, ctx = document) => ctx.querySelector(s);
 const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
+
+const track = (category, action, name) => window._paq?.push(["trackEvent", category, action, name]);
 
 const preloader = $(".preloader");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = window.matchMedia("(pointer: fine)").matches;
 
-/* ---------- Titre du hero : la taille s'adapte pour que « MSEMEN » remplisse la largeur ---------- */
 function fitHeroTitle() {
   const title = $(".hero__title");
   const line = $(".hero__title .line");
   if (!title || !line) return;
   title.style.fontSize = "";                                    // repart de la valeur CSS
-  line.style.display = "inline-block";                          // pour mesurer la largeur réelle du mot
+  line.style.display = "inline-block";
   const ratio = line.getBoundingClientRect().width / parseFloat(getComputedStyle(title).fontSize);
   line.style.display = "";
   const available = title.clientWidth * 0.96;                   // petite marge de sécurité
-  title.style.fontSize = Math.min(available / ratio, 448) + "px"; // 448px = 28rem max
+  title.style.fontSize = Math.min(available / ratio, 448) + "px";
 }
 fitHeroTitle();
-document.fonts?.ready.then(fitHeroTitle);                       // re-mesure une fois la vraie police chargée
-// ResizeObserver : se déclenche dès que la largeur du hero change (fenêtre, zoom, barre de défilement…)
+document.fonts?.ready.then(fitHeroTitle);
+
 let heroWidth = 0;
 new ResizeObserver(([entry]) => {
   const w = Math.round(entry.contentRect.width);
-  if (w !== heroWidth) { heroWidth = w; fitHeroTitle(); }   // on ignore les changements de hauteur
+  if (w !== heroWidth) { heroWidth = w; fitHeroTitle(); }
 }).observe($(".hero"));
 
-/* ---------- Mode dégradé : pas de GSAP (CDN bloqué) ou animations réduites ---------- */
 if (typeof gsap === "undefined" || reduceMotion) {
   preloader?.remove();
   $$(".manifesto__text").forEach((el) => (el.style.opacity = 1));
@@ -44,17 +39,15 @@ function init() {
   document.documentElement.classList.add("js");
   gsap.registerPlugin(ScrollTrigger, Flip);
 
-  /* ---------- 1. Scroll fluide (Lenis) synchronisé avec GSAP ---------- */
-  let lenis = null;
+    let lenis = null;
   if (typeof Lenis !== "undefined") {
     lenis = new Lenis({ lerp: 0.09 });
-    lenis.on("scroll", ScrollTrigger.update);           // ScrollTrigger suit Lenis
-    gsap.ticker.add((t) => lenis.raf(t * 1000));        // une seule boucle d'animation
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
-    lenis.stop();                                       // bloqué pendant le preloader
+    lenis.stop();
   }
 
-  // Liens d'ancre (#recette…) : scroll animé
   $$('a[href^="#"]').forEach((a) =>
     a.addEventListener("click", (e) => {
       const target = $(a.getAttribute("href"));
@@ -64,15 +57,13 @@ function init() {
     })
   );
 
-  /* ---------- 2. Découpage du texte en mots / lettres ---------- */
-  $$(".js-words").forEach((el) => {
+    $$(".js-words").forEach((el) => {
     el.innerHTML = el.textContent.trim().split(/\s+/).map((w) => `<span class="word">${w}</span>`).join(" ");
   });
   const giant = $(".footer__giant");
   giant.innerHTML = `<span class="line">${[...giant.textContent].map((c) => `<span class="char">${c}</span>`).join("")}</span>`;
 
-  /* ---------- 3. Preloader puis intro du hero ---------- */
-  gsap.set(".hero__title .char", { yPercent: 115 });
+    gsap.set(".hero__title .char", { yPercent: 115 });
   gsap.set(".hero__msemen", { scale: 0, rotation: -140, transformOrigin: "50% 50%" });
   gsap.set([".hero__tag", ".hero__lead", ".hero__bottom .btn", ".nav"], { y: 30, autoAlpha: 0 });
 
@@ -90,15 +81,14 @@ function init() {
     .to(".hero__title .char", { yPercent: 0, duration: 1.4, stagger: 0.06 }, "-=0.55")
     .to(".hero__msemen", { scale: 1, rotation: -8, duration: 1.8, ease: "elastic.out(1, 0.6)" }, "-=1.1")
     .to([".nav", ".hero__tag", ".hero__lead", ".hero__bottom .btn"], { y: 0, autoAlpha: 1, duration: 1, stagger: 0.08 }, "-=1.4")
-    .set(".nav", { clearProps: "transform" })           // rend la main au CSS (.is-hidden)
+    .set(".nav", { clearProps: "transform" })
     .add(() => lenis?.start());
 
-  gsap.set(".hero__visual", { xPercent: -50, yPercent: -50, x: 0, y: 0 }); // centrage géré par GSAP
-  // Le msemen « flotte » doucement en continu
+  gsap.set(".hero__visual", { xPercent: -50, yPercent: -50, x: 0, y: 0 });
+
   gsap.to(".hero__visual", { y: "+=14", duration: 2.6, ease: "sine.inOut", yoyo: true, repeat: -1 });
 
-  /* ---------- 4. Hero : parallaxe au scroll + inclinaison à la souris ---------- */
-  gsap.to(".hero__msemen", {
+    gsap.to(".hero__msemen", {
     yPercent: 120, rotation: 160, scale: 0.55, ease: "none",
     scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
   });
@@ -117,8 +107,7 @@ function init() {
     });
   }
 
-  /* ---------- 5. Marquee : accélère et change de sens selon le scroll ---------- */
-  const marquee = gsap.to(".marquee__track", { xPercent: -50, duration: 28, ease: "none", repeat: -1 });
+    const marquee = gsap.to(".marquee__track", { xPercent: -50, duration: 28, ease: "none", repeat: -1 });
   ScrollTrigger.create({
     onUpdate: (self) => {
       const speed = gsap.utils.clamp(-6, 6, self.getVelocity() / 250);
@@ -127,8 +116,7 @@ function init() {
     },
   });
 
-  /* ---------- 6. Nav : se cache en descendant, réapparaît en remontant ---------- */
-  const nav = $(".nav");
+    const nav = $(".nav");
   ScrollTrigger.create({
     start: 0, end: "max",
     onUpdate: (self) => {
@@ -137,13 +125,11 @@ function init() {
     },
   });
 
-  /* ---------- 7. Manifeste : les mots s'allument un par un au scroll ---------- */
-  gsap.to(".manifesto__text .word", {
+    gsap.to(".manifesto__text .word", {
     opacity: 1, stagger: 0.1, ease: "none",
     scrollTrigger: { trigger: ".manifesto__text", start: "top 80%", end: "bottom 45%", scrub: true },
   });
 
-  // Compteurs
   $$("[data-count]").forEach((el) => {
     const obj = { v: 0 };
     gsap.to(obj, {
@@ -153,16 +139,14 @@ function init() {
     });
   });
 
-  /* ---------- 8. Titres h2 : montée en douceur ---------- */
-  $$(".h2").forEach((h) =>
+    $$(".h2").forEach((h) =>
     gsap.from(h, {
       y: 80, autoAlpha: 0, duration: 1.3, ease: "expo.out",
       scrollTrigger: { trigger: h, start: "top 85%" },
     })
   );
 
-  /* ---------- 9. Recette : scroll horizontal épinglé (desktop) ---------- */
-  const mm = gsap.matchMedia();
+    const mm = gsap.matchMedia();
   mm.add("(min-width: 821px)", () => {
     const track = $(".recipe__track");
     const distance = () => track.scrollWidth - innerWidth;
@@ -175,7 +159,6 @@ function init() {
       },
     });
 
-    // chaque carte se redresse en entrant dans l'écran
     $$(".step").forEach((step) =>
       gsap.from(step, {
         rotation: 6, yPercent: 12, autoAlpha: 0.3, ease: "none",
@@ -187,8 +170,7 @@ function init() {
     );
   });
 
-  /* ---------- 10. Déclinaisons : apparition + filtres animés (Flip) + tilt 3D ---------- */
-  const cards = $$(".card");
+    const cards = $$(".card");
   gsap.set(cards, { autoAlpha: 0, y: 70 });
   ScrollTrigger.batch(cards, {
     start: "top 90%", once: true,
@@ -199,11 +181,12 @@ function init() {
     btn.addEventListener("click", () => {
       $$(".filter").forEach((b) => b.classList.toggle("is-active", b === btn));
       const f = btn.dataset.filter;
+      track("Déclinaisons", "Filtre", f);
 
-      gsap.set(cards, { autoAlpha: 1, y: 0 });          // au cas où certaines cartes n'étaient pas encore apparues
-      const state = Flip.getState(cards);                 // 1. on mémorise les positions
-      cards.forEach((c) => c.classList.toggle("is-hidden", f !== "all" && c.dataset.cat !== f)); // 2. on change le DOM
-      Flip.from(state, {                                  // 3. GSAP anime de l'ancienne à la nouvelle position
+      gsap.set(cards, { autoAlpha: 1, y: 0 });
+      const state = Flip.getState(cards);
+      cards.forEach((c) => c.classList.toggle("is-hidden", f !== "all" && c.dataset.cat !== f));
+      Flip.from(state, {
         duration: 0.8, ease: "power3.inOut", absolute: true, scale: true,
         onEnter: (els) => gsap.fromTo(els, { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.6 }),
         onLeave: (els) => gsap.to(els, { autoAlpha: 0, scale: 0.85, duration: 0.4 }),
@@ -229,8 +212,7 @@ function init() {
     });
   }
 
-  /* ---------- 11. N°48 : la photo se dévoile (clip-path) + parallaxe ---------- */
-  gsap.fromTo(".n48__img-wrap",
+    gsap.fromTo(".n48__img-wrap",
     { clipPath: "inset(18% 14% 18% 14% round 22px)" },
     {
       clipPath: "inset(0% 0% 0% 0% round 22px)", ease: "none",
@@ -250,8 +232,7 @@ function init() {
     scrollTrigger: { trigger: ".n48__text p", start: "top 85%" },
   });
 
-  /* ---------- 12. Accompagnements + footer ---------- */
-  gsap.from(".pairings__list li", {
+    gsap.from(".pairings__list li", {
     x: -80, autoAlpha: 0, duration: 1.1, stagger: 0.08, ease: "expo.out",
     scrollTrigger: { trigger: ".pairings__list", start: "top 80%" },
   });
@@ -260,8 +241,7 @@ function init() {
     scrollTrigger: { trigger: ".footer__giant", start: "top 95%" },
   });
 
-  /* ---------- 13. Curseur perso + boutons magnétiques (desktop) ---------- */
-  if (finePointer) {
+    if (finePointer) {
     const cursor = $(".cursor");
     const label = $(".cursor__label");
     const cx = gsap.quickTo(cursor, "x", { duration: 0.35, ease: "power3" });
@@ -286,11 +266,9 @@ function init() {
     });
   }
 
-  // Recalcule les positions une fois les polices et l'image chargées
   window.addEventListener("load", () => ScrollTrigger.refresh());
 }
 
-/* Filtres sans animation (mode dégradé) */
 function setupFiltersWithoutAnimation() {
   $$(".filter").forEach((btn) =>
     btn.addEventListener("click", () => {

@@ -1,0 +1,4 @@
+.env
+secrets/
+registry/auth/
+registry/.credentials
