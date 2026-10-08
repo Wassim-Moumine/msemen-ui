@@ -3,8 +3,9 @@ set -e
 REGISTRY=${REGISTRY:-localhost:5000}
 TAG=${TAG:-1.0}
 
-docker compose build web
+docker compose build web proxy
 docker push $REGISTRY/msemen/web:$TAG
+docker push $REGISTRY/msemen/proxy:$TAG
 
 docker pull matomo:5.14.0-apache
 docker tag  matomo:5.14.0-apache $REGISTRY/msemen/matomo:$TAG

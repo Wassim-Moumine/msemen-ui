@@ -8,3 +8,4 @@ output-inspect.json
 docker-compose*.yml
 Dockerfile
 publish.sh
+proxy/

@@ -1,11 +1,15 @@
 name: msemen
 
 services:
-  web:
-    image: ${REGISTRY:-localhost:5000}/msemen/web:${TAG:-1.0}
+  proxy:
+    image: ${REGISTRY:-localhost:5000}/msemen/proxy:${TAG:-1.0}
     ports:
       - "80:8080"
-    depends_on: [matomo]
+    depends_on: [web, matomo]
+    restart: unless-stopped
+
+  web:
+    image: ${REGISTRY:-localhost:5000}/msemen/web:${TAG:-1.0}
     restart: unless-stopped
 
   matomo:
