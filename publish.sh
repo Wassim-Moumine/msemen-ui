@@ -1,6 +1,7 @@
 #!/bin/sh
 set -e
-. ./.env
+REGISTRY=${REGISTRY:-localhost:5000}
+TAG=${TAG:-1.0}
 
 docker compose build web
 docker push $REGISTRY/msemen/web:$TAG

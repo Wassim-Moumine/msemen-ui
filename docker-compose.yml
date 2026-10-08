@@ -3,7 +3,7 @@ name: msemen
 services:
   web:
     build: .
-    image: ${REGISTRY}/msemen/web:${TAG}
+    image: ${REGISTRY:-localhost:5000}/msemen/web:${TAG:-1.0}
     ports:
       - "80:8080"
     depends_on: [matomo]

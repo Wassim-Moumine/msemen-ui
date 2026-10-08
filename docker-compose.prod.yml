@@ -2,14 +2,14 @@ name: msemen
 
 services:
   web:
-    image: ${REGISTRY}/msemen/web:${TAG}
+    image: ${REGISTRY:-localhost:5000}/msemen/web:${TAG:-1.0}
     ports:
       - "80:8080"
     depends_on: [matomo]
     restart: unless-stopped
 
   matomo:
-    image: ${REGISTRY}/msemen/matomo:${TAG}
+    image: ${REGISTRY:-localhost:5000}/msemen/matomo:${TAG:-1.0}
     environment:
       MATOMO_DATABASE_HOST: db
       MATOMO_DATABASE_DBNAME: matomo
@@ -25,7 +25,7 @@ services:
     restart: unless-stopped
 
   db:
-    image: ${REGISTRY}/msemen/db:${TAG}
+    image: ${REGISTRY:-localhost:5000}/msemen/db:${TAG:-1.0}
     command: --max-allowed-packet=64M
     environment:
       MARIADB_DATABASE: matomo
