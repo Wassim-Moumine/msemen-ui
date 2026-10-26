@@ -64,7 +64,7 @@ function init() {
   giant.innerHTML = `<span class="line">${[...giant.textContent].map((c) => `<span class="char">${c}</span>`).join("")}</span>`;
 
     gsap.set(".hero__title .char", { yPercent: 115 });
-  gsap.set(".hero__msemen", { scale: 0, rotation: -140, transformOrigin: "50% 50%" });
+  gsap.set(".hero__msemen", { scale: 0, rotation: -20, transformOrigin: "50% 100%" });
   gsap.set([".hero__tag", ".hero__lead", ".hero__bottom .btn", ".nav"], { y: 30, autoAlpha: 0 });
 
   const counter = { v: 0 };
@@ -79,7 +79,7 @@ function init() {
     .to(preloader, { yPercent: -100, duration: 1.1, ease: "expo.inOut" }, "-=0.2")
     .set(preloader, { display: "none" })
     .to(".hero__title .char", { yPercent: 0, duration: 1.4, stagger: 0.06 }, "-=0.55")
-    .to(".hero__msemen", { scale: 1, rotation: -8, duration: 1.8, ease: "elastic.out(1, 0.6)" }, "-=1.1")
+    .to(".hero__msemen", { scale: 1, rotation: 0, duration: 1.8, ease: "elastic.out(1, 0.6)" }, "-=1.1")
     .to([".nav", ".hero__tag", ".hero__lead", ".hero__bottom .btn"], { y: 0, autoAlpha: 1, duration: 1, stagger: 0.08 }, "-=1.4")
     .set(".nav", { clearProps: "transform" })
     .add(() => lenis?.start());
@@ -89,7 +89,7 @@ function init() {
   gsap.to(".hero__visual", { y: "+=14", duration: 2.6, ease: "sine.inOut", yoyo: true, repeat: -1 });
 
     gsap.to(".hero__msemen", {
-    yPercent: 120, rotation: 160, scale: 0.55, ease: "none",
+    yPercent: 70, rotation: 10, scale: 0.7, ease: "none",
     scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
   });
   gsap.to(".hero__title", {
@@ -102,8 +102,8 @@ function init() {
     const rx = gsap.quickTo(".hero__visual", "rotationX", { duration: 0.8, ease: "power3" });
     const ry = gsap.quickTo(".hero__visual", "rotationY", { duration: 0.8, ease: "power3" });
     $(".hero").addEventListener("mousemove", (e) => {
-      ry((e.clientX / innerWidth - 0.5) * 40);
-      rx(-(e.clientY / innerHeight - 0.5) * 40);
+      ry((e.clientX / innerWidth - 0.5) * 24);
+      rx(-(e.clientY / innerHeight - 0.5) * 24);
     });
   }
 
