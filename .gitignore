@@ -3,3 +3,4 @@
 secrets/
 registry/auth/
 registry/.credentials
+.ssh/
