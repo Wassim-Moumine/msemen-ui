@@ -94,12 +94,18 @@
       register: public_ip
 
     - name: Point the DuckDNS name to this VM
-      uri:
-        url: "https://www.duckdns.org/update?domains={{ domain | regex_replace('\\.duckdns\\.org$', '') }}&token={{ duckdns_token }}&ip={{ public_ip.content }}"
-        return_content: true
+      command: curl -sS "https://www.duckdns.org/update?domains={{ domain | regex_replace('\\.duckdns\\.org$', '') }}&token={{ duckdns_token }}&ip={{ public_ip.content | trim }}"
       register: duckdns
-      failed_when: duckdns.content != 'OK'
+      failed_when: false
+      changed_when: false
       no_log: true
+      when: duckdns_token | length > 0
+
+    - name: Check the DuckDNS answer
+      assert:
+        that: duckdns.stdout | trim == 'OK'
+        fail_msg: "DuckDNS a répondu '{{ duckdns.stdout | trim }}' (code {{ duckdns.rc }}) {{ duckdns.stderr | default('') }}. KO = token ou nom de domaine incorrect."
+        quiet: true
       when: duckdns_token | length > 0
 
     - name: Wait until the domain names point to this VM
