@@ -4,8 +4,24 @@ services:
   proxy:
     image: ${REGISTRY:-localhost:5000}/msemen/proxy:${TAG:-1.0}
     ports:
-      - "80:8080"
+      - "80:80"
+      - "443:443"
+    volumes:
+      - letsencrypt:/etc/letsencrypt:ro
+      - certbot_www:/var/www/certbot
     depends_on: [web, matomo]
+    restart: unless-stopped
+
+  certbot:
+    image: ${REGISTRY:-localhost:5000}/msemen/certbot:${TAG:-1.0}
+    environment:
+      DOMAIN: ${DOMAIN:?DOMAIN manquant}
+      EMAIL: ${CERTBOT_EMAIL:-}
+      STAGING: ${CERTBOT_STAGING:-0}
+    volumes:
+      - letsencrypt:/etc/letsencrypt
+      - certbot_www:/var/www/certbot
+    depends_on: [proxy]
     restart: unless-stopped
 
   web:
@@ -23,6 +39,7 @@ services:
       - db_password
     volumes:
       - matomo_data:/var/www/html
+      - ./matomo/common.config.ini.php:/var/www/html/config/common.config.ini.php
     depends_on:
       db:
         condition: service_healthy
@@ -50,6 +67,8 @@ services:
 volumes:
   db_data:
   matomo_data:
+  letsencrypt:
+  certbot_www:
 
 secrets:
   db_password:

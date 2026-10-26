@@ -1,0 +1,206 @@
+- name: Deploy msemen-ui
+  hosts: localhost
+  connection: local
+  become: true
+  vars:
+    app_dir: /opt/msemen-ui
+    repo: https://github.com/Wassim-Moumine/msemen-ui.git
+    repo_version: main
+    domain: ""
+    certbot_email: ""
+    tls_staging: false
+    duckdns_token: ""
+    dns_check: true
+    registry: localhost:5000
+    image_tag: "1.0"
+    swap_size: 2G
+
+  tasks:
+    - name: Check the domain variable
+      assert:
+        that: domain | length > 0
+        fail_msg: "Domaine manquant. Exemple : -e domain=monnom.duckdns.org"
+        quiet: true
+
+    - name: Install Docker, Compose, Git and curl
+      apt:
+        name: [docker.io, docker-compose-v2, git, curl]
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Check the swap file
+      stat:
+        path: /swapfile
+      register: swapfile
+
+    - name: Create the swap file on small VMs
+      shell: |
+        fallocate -l {{ swap_size }} /swapfile
+        chmod 600 /swapfile
+        mkswap /swapfile
+        swapon /swapfile
+      when: ansible_memtotal_mb < 1500 and not swapfile.stat.exists
+
+    - name: Keep the swap file after a reboot
+      lineinfile:
+        path: /etc/fstab
+        line: /swapfile none swap sw 0 0
+      when: ansible_memtotal_mb < 1500
+
+    - name: Clone or update the repo
+      git:
+        repo: "{{ repo }}"
+        dest: "{{ app_dir }}"
+        version: "{{ repo_version }}"
+        force: true
+
+    - name: Create the secrets folder
+      file:
+        path: "{{ app_dir }}/secrets"
+        state: directory
+        mode: "0700"
+
+    - name: Generate the database passwords
+      copy:
+        dest: "{{ app_dir }}/secrets/{{ item }}.txt"
+        content: "{{ lookup('password', '/root/.msemen_' + item + ' length=24 chars=ascii_letters,digits') }}"
+        mode: "0600"
+        force: false
+      loop: [db_password, db_root_password]
+      no_log: true
+
+    - name: Write the .env file
+      copy:
+        dest: "{{ app_dir }}/.env"
+        mode: "0644"
+        content: |
+          REGISTRY={{ registry }}
+          TAG={{ image_tag }}
+          DOMAIN={{ domain }}
+          CERTBOT_EMAIL={{ certbot_email }}
+          CERTBOT_STAGING={{ 1 if tls_staging | bool else 0 }}
+
+    - name: Get the public IP of the VM
+      uri:
+        url: https://api.ipify.org
+        return_content: true
+      register: public_ip
+
+    - name: Point the DuckDNS name to this VM
+      uri:
+        url: "https://www.duckdns.org/update?domains={{ domain | regex_replace('\\.duckdns\\.org$', '') }}&token={{ duckdns_token }}&ip={{ public_ip.content }}"
+        return_content: true
+      register: duckdns
+      failed_when: duckdns.content != 'OK'
+      no_log: true
+      when: duckdns_token | length > 0
+
+    - name: Wait until the domain names point to this VM
+      command: getent hosts {{ item }}.{{ domain }}
+      register: dns
+      until: public_ip.content in dns.stdout
+      retries: 30
+      delay: 10
+      changed_when: false
+      loop: [msemen, analytics]
+      when: dns_check | bool
+
+    - name: Create the registry folders
+      file:
+        path: "{{ app_dir }}/registry/auth"
+        state: directory
+      when: registry.startswith('localhost')
+
+    - name: Generate the registry credentials
+      shell: |
+        PASS=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)
+        docker run --rm --entrypoint htpasswd httpd:2.4-alpine -Bbn msemen "$PASS" > auth/htpasswd
+        printf 'REGISTRY_USER=msemen\nREGISTRY_PASSWORD=%s\n' "$PASS" > .credentials
+        chmod 600 auth/htpasswd .credentials
+      args:
+        chdir: "{{ app_dir }}/registry"
+        creates: "{{ app_dir }}/registry/auth/htpasswd"
+        executable: /bin/bash
+      no_log: true
+      when: registry.startswith('localhost')
+
+    - name: Start the private registry
+      command: docker compose up -d
+      args:
+        chdir: "{{ app_dir }}/registry"
+      changed_when: false
+      when: registry.startswith('localhost')
+
+    - name: Wait for the registry
+      uri:
+        url: http://localhost:5000/v2/
+        status_code: [200, 401]
+      register: registry_up
+      until: registry_up.status in [200, 401]
+      retries: 12
+      delay: 5
+      when: registry.startswith('localhost')
+
+    - name: Log in to the registry
+      shell: |
+        . ./.credentials
+        printf '%s' "$REGISTRY_PASSWORD" | docker login localhost:5000 -u "$REGISTRY_USER" --password-stdin
+      args:
+        chdir: "{{ app_dir }}/registry"
+        executable: /bin/bash
+      changed_when: false
+      no_log: true
+      when: registry.startswith('localhost')
+
+    - name: Build the images and publish them to the registry
+      command: sh publish.sh
+      args:
+        chdir: "{{ app_dir }}"
+      environment:
+        REGISTRY: "{{ registry }}"
+        TAG: "{{ image_tag }}"
+
+    - name: Pull the images from the registry
+      command: docker compose -f docker-compose.prod.yml pull
+      args:
+        chdir: "{{ app_dir }}"
+
+    - name: Start the stack
+      command: docker compose -f docker-compose.prod.yml up -d
+      args:
+        chdir: "{{ app_dir }}"
+
+    - name: Wait for the proxy to be healthy
+      command: docker inspect -f '{% raw %}{{.State.Health.Status}}{% endraw %}' msemen-proxy-1
+      register: proxy_health
+      until: proxy_health.stdout == 'healthy'
+      retries: 30
+      delay: 5
+      changed_when: false
+
+    - name: Wait for the TLS certificate
+      command: docker exec msemen-proxy-1 test -f /etc/letsencrypt/live/msemen/fullchain.pem
+      register: cert
+      until: cert.rc == 0
+      retries: 30
+      delay: 10
+      changed_when: false
+      failed_when: false
+
+    - name: Remove unused images
+      command: docker image prune -f
+      changed_when: false
+
+    - name: Show the result
+      debug:
+        msg:
+          - "Site      : https://msemen.{{ domain }}"
+          - "Matomo    : https://analytics.{{ domain }}"
+          - "Certificat: {{ 'obtenu' if cert.rc == 0 else 'NON obtenu, voir : docker logs msemen-certbot-1' }}"

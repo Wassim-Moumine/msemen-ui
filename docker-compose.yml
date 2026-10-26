@@ -5,7 +5,7 @@ services:
     build: ./proxy
     image: ${REGISTRY:-localhost:5000}/msemen/proxy:${TAG:-1.0}
     ports:
-      - "80:8080"
+      - "80:80"
     depends_on: [web, matomo]
     restart: unless-stopped
 
@@ -13,6 +13,11 @@ services:
     build: .
     image: ${REGISTRY:-localhost:5000}/msemen/web:${TAG:-1.0}
     restart: unless-stopped
+
+  certbot:
+    build: ./certbot
+    image: ${REGISTRY:-localhost:5000}/msemen/certbot:${TAG:-1.0}
+    profiles: [tls]
 
   matomo:
     image: matomo:5.14.0-apache

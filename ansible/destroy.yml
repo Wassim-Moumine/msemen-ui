@@ -1,0 +1,72 @@
+- name: Destroy msemen-ui
+  hosts: localhost
+  connection: local
+  become: true
+  vars:
+    app_dir: /opt/msemen-ui
+    purge: false
+    remove_data: false
+    remove_certs: false
+    remove_registry: false
+    remove_images: false
+    remove_files: false
+    confirm: ""
+    do_data: "{{ purge | bool or remove_data | bool }}"
+    do_certs: "{{ purge | bool or remove_certs | bool }}"
+    do_registry: "{{ purge | bool or remove_registry | bool }}"
+    do_images: "{{ purge | bool or remove_images | bool }}"
+    do_files: "{{ purge | bool or remove_files | bool }}"
+
+  tasks:
+    - name: Refuse destructive options without confirmation
+      assert:
+        that: not (do_data or do_certs or do_registry or do_images or do_files) or confirm == 'yes'
+        fail_msg: "Option destructive : ajoute -e confirm=yes"
+        quiet: true
+
+    - name: Refuse removing the files while keeping the data
+      assert:
+        that: not do_files or do_data
+        fail_msg: "remove_files exige remove_data : sinon le mot de passe de la base serait perdu"
+        quiet: true
+
+    - name: Check the app folder
+      stat:
+        path: "{{ app_dir }}/docker-compose.prod.yml"
+      register: app
+
+    - name: Stop and remove the application containers
+      command: docker compose -f docker-compose.prod.yml down
+      args:
+        chdir: "{{ app_dir }}"
+      environment:
+        DOMAIN: "{{ domain | default('unused') }}"
+      when: app.stat.exists
+
+    - name: Remove the database and Matomo volumes
+      command: docker volume rm -f msemen_db_data msemen_matomo_data
+      when: do_data
+
+    - name: Remove the TLS certificate volumes
+      command: docker volume rm -f msemen_letsencrypt msemen_certbot_www
+      when: do_certs
+
+    - name: Stop and remove the private registry
+      command: docker compose down {{ '-v' if do_registry else '' }}
+      args:
+        chdir: "{{ app_dir }}/registry"
+      when: do_registry and app.stat.exists
+
+    - name: Remove the msemen images
+      shell: docker images --format '{% raw %}{{.Repository}}:{{.Tag}}{% endraw %}' | grep '/msemen/' | xargs -r docker rmi -f
+      when: do_images
+
+    - name: Remove the application files and generated passwords
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ app_dir }}"
+        - /root/.msemen_db_password
+        - /root/.msemen_db_root_password
+      when: do_files
