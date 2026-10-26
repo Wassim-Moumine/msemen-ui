@@ -28,10 +28,6 @@ Site : http://msemen.localhost, Matomo : http://analytics.localhost (en HTTP).
 
 ## Sur la VM
 
-**Une fois** : sur duckdns.org, créer un sous-domaine (par exemple `monnom`), y mettre l'IP de la VM et noter le token.
-
-Sur la VM, en root :
-
 ```bash
 apt-get update && apt-get install -y git ansible
 git clone https://github.com/Wassim-Moumine/msemen-ui.git /opt/msemen-ui || git -C /opt/msemen-ui pull --ff-only
@@ -53,7 +49,7 @@ ansible-playbook /opt/msemen-ui/ansible/deploy.yml -e @/root/msemen-vars.yml
 
 `tls_staging: true` donne un certificat de test (le navigateur le jugera non fiable). Pour le vrai certificat, voir plus bas.
 
-Puis ouvrir `https://analytics.monnom.duckdns.org` et faire l'assistant de Matomo (une fois) : créer le compte, ajouter le site `https://msemen.monnom.duckdns.org`.
+Puis ouvrir `https://analytics.ui-maroc.duckdns.org` et faire l'assistant de Matomo (une fois) : créer le compte, ajouter le site `https://msemen.ui-maroc.duckdns.org`.
 
 ## Détruire et rejouer
 
@@ -79,32 +75,3 @@ Par défaut, cela arrête seulement les conteneurs. Options (toutes avec `-e con
 - **Registry** : `publish.sh` construit l'image `web` et reprend les images officielles, puis les pousse dans un registry qui n'écoute que sur `127.0.0.1` de la VM, donc privé. `docker-compose.prod.yml` ne construit rien : il tire ces images.
 - **Mémoire** : la VM n'a que 458 Mo de RAM, le playbook ajoute 2 Go de swap.
 - **Proxy** : si `web` ou `matomo` est recréé seul, relancer le proxy (`docker compose -f docker-compose.prod.yml restart proxy`).
-- **Port 443** : à ouvrir dans le pare-feu du fournisseur s'il y en a un.
-
-## Ce que ça illustre
-
-- Build multi-stage (image `web`)
-- Volumes (`db_data`, `matomo_data`)
-- Docker secrets (mots de passe de la base)
-- Healthcheck et `depends_on`
-- Reverse proxy et DNS interne de Docker
-- Bind mount et variables d'environnement (config du proxy)
-- Registry privé et compose de production
-- Ansible (déploiement et destruction)
-
-## Structure
-
-```
-ansible/     deploy.yml, destroy.yml
-docs/        schéma d'architecture
-matomo/      config de Matomo pour la production
-proxy/       config Nginx (dev et prod)
-registry/    registry privé
-site/        le site
-Dockerfile, nginx.conf   image web
-docker-compose.yml       développement
-docker-compose.prod.yml  production
-publish.sh               construit et publie les images
-```
-
-Photos : Wikimedia Commons, licences libres (crédits en bas du site).
