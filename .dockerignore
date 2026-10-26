@@ -10,7 +10,6 @@ Dockerfile
 publish.sh
 proxy/
 .ssh/
-certbot/
 matomo/
 ansible/
 docs/

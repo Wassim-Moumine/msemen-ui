@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 790" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 770" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
       <path d="M0,0 L10,4 L0,8 z" fill="#475569"/>
@@ -8,7 +8,7 @@
     </marker>
   </defs>
 
-  <rect width="1100" height="790" fill="#ffffff"/>
+  <rect width="1100" height="770" fill="#ffffff"/>
 
   <text x="40" y="44" font-size="26" font-weight="700" fill="#0f172a">MSEMEN · architecture de production</text>
   <text x="40" y="68" font-size="14" fill="#64748b">Reverse proxy Nginx · HTTPS Let's Encrypt (défi HTTP-01) · Matomo + MariaDB · registry privé</text>
@@ -28,27 +28,28 @@
   <line x1="800" y1="120" x2="652" y2="120" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow-dash)"/>
   <text x="726" y="110" font-size="12" text-anchor="middle" fill="#64748b">DNS</text>
 
-  <rect x="30" y="190" width="1040" height="520" rx="18" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="30" y="190" width="1040" height="500" rx="18" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
   <text x="52" y="216" font-size="14" font-weight="600" fill="#475569">VM DigitalOcean · Ubuntu 24.04 · Docker Compose (docker-compose.prod.yml)</text>
 
   <rect x="60" y="250" width="230" height="120" rx="14" fill="#fef9c3" stroke="#ca8a04" stroke-width="2.5"/>
-  <text x="175" y="282" font-size="18" font-weight="700" text-anchor="middle" fill="#713f12">certbot</text>
-  <text x="175" y="306" font-size="12" text-anchor="middle" fill="#713f12">obtient et renouvelle</text>
-  <text x="175" y="324" font-size="12" text-anchor="middle" fill="#713f12">le certificat (HTTP-01)</text>
-  <text x="175" y="348" font-size="12" text-anchor="middle" fill="#a16207">vérifie toutes les 12 h</text>
+  <text x="175" y="280" font-size="18" font-weight="700" text-anchor="middle" fill="#713f12">certbot</text>
+  <text x="175" y="302" font-size="12" text-anchor="middle" fill="#713f12">installé sur la VM (pas en conteneur)</text>
+  <text x="175" y="322" font-size="12" text-anchor="middle" fill="#713f12">obtient le certificat (HTTP-01)</text>
+  <text x="175" y="342" font-size="12" text-anchor="middle" fill="#a16207">renouvellement automatique</text>
+  <text x="175" y="358" font-size="12" text-anchor="middle" fill="#a16207">(timer systemd)</text>
 
   <rect x="400" y="240" width="300" height="140" rx="14" fill="#ffedd5" stroke="#ea580c" stroke-width="3"/>
   <text x="550" y="272" font-size="19" font-weight="700" text-anchor="middle" fill="#7c2d12">proxy (nginx)</text>
   <text x="550" y="296" font-size="13" text-anchor="middle" fill="#7c2d12">:80 → redirige vers HTTPS</text>
-  <text x="550" y="316" font-size="13" text-anchor="middle" fill="#7c2d12">:443 → TLS (certificat rechargé à chaud)</text>
-  <text x="550" y="340" font-size="13" font-weight="600" text-anchor="middle" fill="#9a3412">analytics.* → matomo</text>
-  <text x="550" y="360" font-size="13" font-weight="600" text-anchor="middle" fill="#9a3412">tout le reste → web</text>
+  <text x="550" y="316" font-size="13" text-anchor="middle" fill="#7c2d12">:443 → HTTPS avec le certificat</text>
+  <text x="550" y="340" font-size="13" font-weight="600" text-anchor="middle" fill="#9a3412">msemen.X → web</text>
+  <text x="550" y="360" font-size="13" font-weight="600" text-anchor="middle" fill="#9a3412">analytics.X → matomo</text>
 
   <rect x="830" y="250" width="210" height="120" rx="14" fill="#e2e8f0" stroke="#64748b" stroke-width="2.5"/>
   <text x="935" y="282" font-size="18" font-weight="700" text-anchor="middle" fill="#1e293b">registry:2</text>
   <text x="935" y="306" font-size="12" text-anchor="middle" fill="#334155">127.0.0.1:5000 seulement</text>
-  <text x="935" y="324" font-size="12" text-anchor="middle" fill="#334155">protégé par mot de passe</text>
-  <text x="935" y="348" font-size="11" text-anchor="middle" fill="#475569">proxy · web · certbot · matomo · db</text>
+  <text x="935" y="324" font-size="12" text-anchor="middle" fill="#334155">donc privé</text>
+  <text x="935" y="348" font-size="11" text-anchor="middle" fill="#475569">nginx · web · matomo · db</text>
   <text x="935" y="396" font-size="11" text-anchor="middle" fill="#64748b">publish.sh pousse les images</text>
   <text x="935" y="412" font-size="11" text-anchor="middle" fill="#64748b">docker compose pull les récupère</text>
 
@@ -69,29 +70,23 @@
   <rect x="865" y="610" width="160" height="40" rx="10" fill="#ffffff" stroke="#9333ea" stroke-width="2" stroke-dasharray="6 4"/>
   <text x="945" y="635" font-size="13" font-weight="600" text-anchor="middle" fill="#581c87">volume db_data</text>
 
-  <rect x="50" y="410" width="210" height="106" rx="12" fill="#ffffff" stroke="#ca8a04" stroke-width="2" stroke-dasharray="6 4"/>
-  <text x="155" y="430" font-size="11" text-anchor="middle" fill="#a16207">volumes partagés</text>
-  <rect x="65" y="440" width="180" height="28" rx="8" fill="#fef9c3" stroke="#ca8a04"/>
-  <text x="155" y="459" font-size="13" font-weight="600" text-anchor="middle" fill="#713f12">letsencrypt</text>
-  <rect x="65" y="476" width="180" height="28" rx="8" fill="#fef9c3" stroke="#ca8a04"/>
-  <text x="155" y="495" font-size="13" font-weight="600" text-anchor="middle" fill="#713f12">certbot_www</text>
+  <rect x="60" y="420" width="190" height="56" rx="12" fill="#ffffff" stroke="#ca8a04" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="155" y="445" font-size="14" font-weight="700" text-anchor="middle" fill="#713f12">/etc/letsencrypt</text>
+  <text x="155" y="463" font-size="11" text-anchor="middle" fill="#a16207">dossier de la VM</text>
 
   <path d="M130,150 L130,250" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 5" fill="none" marker-end="url(#arrow-dash)"/>
-  <text x="140" y="176" font-size="12" fill="#64748b">demande puis validation</text>
-
-  <path d="M300,125 C390,125 400,200 440,240" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 5" fill="none" marker-end="url(#arrow-dash)"/>
-  <text x="312" y="160" font-size="12" fill="#64748b">défi HTTP-01 sur le port 80</text>
+  <text x="142" y="176" font-size="12" fill="#64748b">demande puis défi sur le port 80</text>
 
   <path d="M920,150 C920,230 790,262 702,272" stroke="#475569" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
   <text x="852" y="222" font-size="12" fill="#334155">HTTPS :443</text>
   <text x="852" y="238" font-size="12" fill="#64748b">(HTTP :80 → 301)</text>
 
-  <path d="M175,370 L175,408" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-  <text x="185" y="394" font-size="12" fill="#334155">écrit</text>
+  <path d="M175,370 L175,418" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <text x="185" y="399" font-size="12" fill="#334155">écrit</text>
 
-  <path d="M260,440 L330,440 L330,350 L398,350" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M250,448 L330,448 L330,350 L398,350" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
   <text x="338" y="404" font-size="11" fill="#334155">lit le certificat</text>
-  <text x="338" y="418" font-size="11" fill="#334155">et sert le défi</text>
+  <text x="338" y="418" font-size="11" fill="#334155">(lecture seule)</text>
 
   <path d="M470,380 L470,468" stroke="#475569" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
   <text x="480" y="430" font-size="12" fill="#334155">web:8080</text>
@@ -105,7 +100,7 @@
   <path d="M700,560 L700,608" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
   <path d="M945,560 L945,608" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
 
-  <text x="40" y="742" font-size="13" font-weight="600" fill="#334155">Réseaux et accès</text>
-  <text x="40" y="762" font-size="12" fill="#64748b">Seuls les ports 80 et 443 du proxy sont ouverts sur Internet (plus le 22 pour SSH). Les autres services communiquent par le réseau interne de Compose.</text>
-  <text x="40" y="778" font-size="12" fill="#64748b">Les mots de passe de la base sont des Docker secrets. Le certificat est renouvelé automatiquement et rechargé sans redémarrage.</text>
+  <text x="40" y="722" font-size="13" font-weight="600" fill="#334155">À retenir</text>
+  <text x="40" y="742" font-size="12" fill="#64748b">Seuls les ports 80 et 443 du proxy sont ouverts sur Internet (plus le 22 pour SSH). Les autres services se parlent par le réseau interne de Compose.</text>
+  <text x="40" y="758" font-size="12" fill="#64748b">Les mots de passe de la base sont des Docker secrets. Lors d'un renouvellement, certbot arrête le proxy quelques secondes puis le relance.</text>
 </svg>

@@ -2,26 +2,16 @@ name: msemen
 
 services:
   proxy:
-    image: ${REGISTRY:-localhost:5000}/msemen/proxy:${TAG:-1.0}
+    image: ${REGISTRY:-localhost:5000}/msemen/nginx:${TAG:-1.0}
+    environment:
+      DOMAIN: ${DOMAIN:?DOMAIN manquant}
+    volumes:
+      - ./proxy/prod.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     ports:
       - "80:80"
       - "443:443"
-    volumes:
-      - letsencrypt:/etc/letsencrypt:ro
-      - certbot_www:/var/www/certbot
     depends_on: [web, matomo]
-    restart: unless-stopped
-
-  certbot:
-    image: ${REGISTRY:-localhost:5000}/msemen/certbot:${TAG:-1.0}
-    environment:
-      DOMAIN: ${DOMAIN:?DOMAIN manquant}
-      EMAIL: ${CERTBOT_EMAIL:-}
-      STAGING: ${CERTBOT_STAGING:-0}
-    volumes:
-      - letsencrypt:/etc/letsencrypt
-      - certbot_www:/var/www/certbot
-    depends_on: [proxy]
     restart: unless-stopped
 
   web:
@@ -67,8 +57,6 @@ services:
 volumes:
   db_data:
   matomo_data:
-  letsencrypt:
-  certbot_www:
 
 secrets:
   db_password:
